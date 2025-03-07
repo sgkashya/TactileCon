@@ -1,35 +1,10 @@
-// import { Text, View, StyleSheet } from "react-native";
-// import { LinearGradient } from "expo-linear-gradient";
-
-// export default function Index() {
-//   return (
-//     <LinearGradient
-//       colors={["#FFFFFF", "#FC9F35"]}
-//       locations={[0.4, 1]} // 40% for #FFFFFF, 100% for #FC9F35
-//       style={styles.container}
-//     >
-//       <View
-//         style={styles.container}
-//       >
-//         <Text>Welcome to the SPARK Challenge!</Text>
-//       </View>
-//     </LinearGradient>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-// });
-
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+  const router = useRouter();
   return (
     <LinearGradient
       colors={["#FFFFFF", "#FC9F35"]}
@@ -50,15 +25,15 @@ export default function HomeScreen() {
         <Text style={styles.title}>Challenge!</Text>
 
         {/* Buttons */}
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/TranslateScreen")}>
           <Text style={styles.buttonText}>Translate to Braille</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/ScheduleScreen")}>
           <Text style={styles.buttonText}>Schedule of Events</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/NavigateScreen")}>
           <Text style={styles.buttonText}>Navigate to an Event</Text>
         </TouchableOpacity>
       </View>
@@ -78,7 +53,7 @@ const styles = StyleSheet.create({
     height: 223,
     marginBottom: 20,
     position: "absolute",
-    top: 0,  // Y-position
+    top: 100,  // Y-position
     left: 29, // X-position
   },
   content: {

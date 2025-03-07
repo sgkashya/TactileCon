@@ -1,16 +1,36 @@
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
-export default function RootLayout() {
+export default function App() {
   return (
-    <Stack>
-      <Stack.Screen 
-        name="index"
-        options={{
-          headerTitle: "",
-        }}
-      />
-      <Stack.Screen name="about" />
-    </Stack>
+    <>
+      <StatusBar style="dark" />
+      <Stack>
+        <Stack.Screen 
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="TranslateScreen"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="ScheduleScreen"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="NavigateScreen"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </>
   );
 }
-
