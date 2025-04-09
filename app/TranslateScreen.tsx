@@ -12,7 +12,7 @@ export default function TranslateScreen() {
   // Text submission
   const handleSendText = () => {
     if (inputText.trim() !== "") {
-      console.log("Sending text to microcontroller:", inputText);
+      console.log("Sending text to Braille display:", inputText);
       setInputText(""); // Clear input field after sending
     }
   };
@@ -42,7 +42,7 @@ export default function TranslateScreen() {
           onChangeText={setInputText}
         />
         <TouchableOpacity style={styles.button} onPress={handleSendText}>
-          <Text style={styles.buttonText}>Send to Microcontroller</Text>
+          <Text style={styles.buttonText}>Send to Braille Display</Text>
         </TouchableOpacity>
       </View>
 
