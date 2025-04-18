@@ -4,15 +4,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import Foundation from '@expo/vector-icons/Foundation';
+import { sendTextToSTM32 } from "../utils/sendTextToSTM32";
 
 export default function TranslateScreen() {
   const router = useRouter();
   const [inputText, setInputText] = useState("");
 
   // Text submission
-  const handleSendText = () => {
+  const handleSendText = async () => {
     if (inputText.trim() !== "") {
       console.log("Sending text to Braille display:", inputText);
+      await sendTextToSTM32(inputText.trim());
       setInputText(""); // Clear input field after sending
     }
   };

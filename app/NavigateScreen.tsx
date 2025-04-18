@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import Foundation from '@expo/vector-icons/Foundation';
 import { useState } from "react";
+import { sendTextToSTM32 } from "../utils/sendTextToSTM32";
 
 export default function NavigateScreen() {
   const router = useRouter();
@@ -21,10 +22,11 @@ export default function NavigateScreen() {
     "Team 5 Booth",
   ];
 
-  const handleLocationPress = (location: string) => {
-    // Placeholder for wireless communication
-    Alert.alert("Selected Location", location);
-    console.log("Selected location:", location);
+  const handleLocationPress = async (location: string) => {
+    // Placeholder text for wireless communication
+    // Alert.alert("Selected Location", location);
+    // console.log("Selected location:", location);
+    await sendTextToSTM32(location);
   };
 
   const filteredLocations = eventLocations.filter(location =>

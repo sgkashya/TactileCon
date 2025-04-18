@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import Foundation from '@expo/vector-icons/Foundation';
+import { sendTextToSTM32 } from "../utils/sendTextToSTM32";
 
 const events = [
   {
@@ -54,18 +55,19 @@ export default function ScheduleScreen() {
         </TouchableOpacity>
       </SafeAreaView>
 
-      {/* Placeholder Content */}
       <View style={styles.listContainer}>
         <Text style={styles.sectionTitle}>Event Schedule</Text>
         <FlatList
           data={events}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View style={styles.eventCard}>
-              <Text style={styles.eventTitle}>{item.title}</Text>
-              <Text style={styles.eventDetails}>{item.time}</Text>
-              <Text style={styles.eventDetails}>{item.location}</Text>
-            </View>
+            <TouchableOpacity onPress={() => sendTextToSTM32(item.title)}>
+              <View style={styles.eventCard}>
+                <Text style={styles.eventTitle}>{item.title}</Text>
+                <Text style={styles.eventDetails}>{item.time}</Text>
+                <Text style={styles.eventDetails}>{item.location}</Text>
+              </View>
+            </TouchableOpacity>
           )}
         />
       </View>
