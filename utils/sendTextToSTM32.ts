@@ -1,7 +1,7 @@
 export async function sendTextToSTM32(text: string): Promise<void> {
     try {
-      const encodedText = encodeURIComponent(text);
-      const url = `http://192.168.137.107/?${encodedText}`;
+      const encodedText = text.trim().replace(/ /g, "_");
+      const url = `http://192.168.137.194/?${encodedText}`;
 
       const response = await fetch(url, {
         method: "GET",

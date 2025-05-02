@@ -22,11 +22,23 @@ export default function NavigateScreen() {
     "Team 5 Booth",
   ];
 
+  const directionsMap: { [key: string]: string } = {
+    "Main Atrium": "From entrance, go straight.",
+    "Presentation Room": "Past Atrium, turn left.",
+    "Cafeteria": "Straight, first right.",
+    "Information Booth": "Right of entrance.",
+    "Team 1 Booth": "Straight, left at end.",
+    "Team 2 Booth": "Next to Team 1.",
+    "Team 3 Booth": "Across from Team 1.",
+    "Team 4 Booth": "Next to Team 3, near Cafeteria.",
+    "Team 5 Booth": "End of hall, past Team 4.",
+  };  
+
   const handleLocationPress = async (location: string) => {
-    // Placeholder text for wireless communication
-    // Alert.alert("Selected Location", location);
-    // console.log("Selected location:", location);
-    await sendTextToSTM32(location);
+    const directions = directionsMap[location] || `Directions to ${location} not available.`;
+    Alert.alert("Success", "Directions to selected event have been sent to Braille Display!");
+    console.log("Sending directions:", directions);
+    await sendTextToSTM32(directions);
   };
 
   const filteredLocations = eventLocations.filter(location =>

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, SafeAreaView, FlatList, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -61,7 +61,12 @@ export default function ScheduleScreen() {
           data={events}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => sendTextToSTM32(item.title)}>
+            <TouchableOpacity
+              onPress={async () => {
+                  await sendTextToSTM32(item.title);
+                  Alert.alert("Success", "Event details have been sent to Braille Display!");
+              }}
+            >
               <View style={styles.eventCard}>
                 <Text style={styles.eventTitle}>{item.title}</Text>
                 <Text style={styles.eventDetails}>{item.time}</Text>

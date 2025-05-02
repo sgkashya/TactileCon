@@ -8,14 +8,35 @@ import { sendTextToSTM32 } from "../utils/sendTextToSTM32";
 
 export default function TranslateScreen() {
   const router = useRouter();
+  const [status, setStatus] = useState("");
   const [inputText, setInputText] = useState("");
 
   // Text submission
   const handleSendText = async () => {
-    if (inputText.trim() !== "") {
-      console.log("Sending text to Braille display:", inputText);
+    if (inputText.trim() === "") {
+      alert("Please enter some text before sending.");
+      return;
+    }
+  
+    const allowedPattern = /^[a-zA-Z\s.,!?]*$/;
+    if (!allowedPattern.test(inputText)) {
+      alert("Only letters, spaces, periods, commas, exclamation marks, and question marks are allowed. Try again!");
+      return;
+    }
+  
+    setStatus("Sending...");
+    console.log("Sending text to Braille display:", inputText);
+    const startTime = performance.now();
+  
+    try {
       await sendTextToSTM32(inputText.trim());
-      setInputText(""); // Clear input field after sending
+      const endTime = performance.now();
+      const timeTaken = (endTime - startTime).toFixed(2); // Calculate duration in ms
+      setStatus(`Text sent to Braille display! (${timeTaken} ms)`);
+      setInputText(""); // Clear input field
+    } catch (error) {
+      console.error("Failed to send text:", error);
+      setStatus("Failed to send.");
     }
   };
 
@@ -42,10 +63,15 @@ export default function TranslateScreen() {
           placeholderTextColor="#777"
           value={inputText}
           onChangeText={setInputText}
+          maxLength={100}
         />
+        <Text style={styles.charCount}>
+          {inputText.length}/100
+        </Text>
         <TouchableOpacity style={styles.button} onPress={handleSendText}>
           <Text style={styles.buttonText}>Send to Braille Display</Text>
         </TouchableOpacity>
+        {status !== "" && <Text style={styles.status}>{status}</Text>}
       </View>
 
       {/* Bottom Navigation Bar */}
@@ -91,6 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
+    marginBottom: 75,
   },
   label: {
     fontSize: 18,
@@ -141,5 +168,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     marginTop: 2,
+  },
+  status: {
+    marginTop: 10,
+    fontSize: 14,
+    color: "#444",
+    textAlign: "center",
+  },
+  charCount: {
+    alignSelf: "flex-end",
+    marginRight: 22,
+    marginBottom: 5,
+    fontSize: 12,
   },
 });
